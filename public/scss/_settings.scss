@@ -1,0 +1,13 @@
+/*
+"To use the Float Grid in Foundation v6.4+, you need to:
+In Sass: set both $xy-grid and $global-flex to false."
+Reference: https://foundation.zurb.com/sites/docs/grid.html
+
+We're using the new XY Grid, so I'm not overriding anything here.
+*/
+//$xy-grid: false;
+//$global-flexbox: false;
+//$global-flex: false;
+
+// Make the page wider:
+$global-width: 120rem;
