@@ -1,5 +1,5 @@
 @import "../../node_modules/foundation-sites/scss/foundation.scss";
-/* If I want to override any of Foundation's variables, I do so inside my own copy of _settings.scss. It's imported into the file foundation.scss. */
+/* If I want to override any of Foundation's variables, I do so inside my own copy of _settings.scss. This also requires linking to it in node_modules/foundation-sites/scss/foundation.scss (see line 24). */
 
 @include foundation-everything;
 
