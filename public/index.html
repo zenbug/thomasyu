@@ -13,73 +13,99 @@
 
 <style>
 
-  .homepage-hero-module {
-    border-right: none;
-    border-left: none;
-    position: relative;
-  }
 
-  .no-video .video-container video,
-  .touch .video-container video {
-    display: none;
-  }
+video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ background: url('//demosthenes.info/assets/images/polina.jpg') no-repeat;
+  background-size: cover;
+  transition: 1s opacity;
+}
+.stopfade {
+   opacity: .5;
+}
 
-  .no-video .video-container .poster,
-  .touch .video-container .poster {
-    display: block !important;
-  }
+#polina {
+  font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
+  font-weight:100;
+  background: rgba(0,0,0,0.3);
+  color: white;
+  padding: 2rem;
+  width: 33%;
+  margin:2rem;
+  float: right;
+  font-size: 1.2rem;
+}
+h1 {
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin-top: 0;
+  letter-spacing: .3rem;
+}
+#polina button {
+  display: block;
+  width: 80%;
+  padding: .4rem;
+  border: none;
+  margin: 1rem auto;
+  font-size: 1.3rem;
+  background: rgba(255,255,255,0.23);
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: .3s background;
+}
+#polina button:hover {
+   background: rgba(0,0,0,0.5);
+}
 
-  .video-container {
-    position: relative;
-    bottom: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background: #000;
-  }
-
-  .video-container .poster img {
-    width: 100%;
-    bottom: 0;
-    position: absolute;
-  }
-
-  .video-container .filter {
-    z-index: 100;
-    position: absolute;
-    background: rgba(0, 0, 0, 0.4);
-    width: 100%;
-  }
-
-  .video-container video {
-    position: absolute;
-    z-index: 0;
-    bottom: 0;
-  }
-
-  .video-container video.fillWidth {
-    width: 100%;
-  }
+a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  background:rgba(0,0,0,0.5);
+  padding: .5rem;
+  transition: .6s background;
+}
+a:hover{
+  background:rgba(0,0,0,0.9);
+}
+@media screen and (max-width: 500px) {
+  div{width:70%;}
+}
+@media screen and (max-device-width: 800px) {
+  html { background: url(https://thenewcode.com/assets/images/polina.jpg) #000 no-repeat center center fixed; }
+  #bgvid { display: none; }
+}
 
 </style>
 </head>
 
 <body>
 
+<video poster="backer.png" id="bgvid" playsinline autoplay muted loop>
+  <!--
+- Video needs to be muted, since Chrome 66+ will not autoplay video with sound.
+WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+<source src="The-Hill.webm" type="video/webm">
+<source src="The-Hill.mp4" type="video/mp4">
 
-  <div class="homepage-hero-module">
-    <div class="video-container">
-      <div class="filter"></div>
-      <video autoplay loop muted class="fillWidth">
-        <source src="Rach-3.mp4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
-        <source src="PATH_TO_WEBM" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
-      </video>
-      <div class="poster hidden">
-        <img src="backer.png" alt="">
-      </div>
-    </div>
-  </div>
+</video>
+<div id="polina">
+<h1>Polina</h1>
+<p>filmed by Alexander Wagner 2011
+<p><a href="http://thenewcode.com/777/Create-Fullscreen-HTML5-Page-Background-Video">original article</a>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur porta dictum turpis, eu mollis justo gravida ac. Proin non eros blandit, rutrum est a, cursus quam. Nam ultricies, velit ac suscipit vehicula, turpis eros sollicitudin lacus, at convallis mauris magna non justo. Etiam et suscipit elit. Morbi eu ornare nulla, sit amet ornare est. Sed vehicula ipsum a mattis dapibus. Etiam volutpat vel enim at auctor.</p>
+<p>Aenean pharetra convallis pellentesque. Vestibulum et metus lectus. Nunc consectetur, ipsum in viverra eleifend, erat erat ultricies felis, at ultricies mi massa eu ligula. Suspendisse in justo dapibus metus sollicitudin ultrices id sed nisl.</p>
+<button>Pause</button>
+</div>
 
 
 
@@ -119,66 +145,41 @@ $(function(){
 </script>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End Smooth Scroll ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-
 <script>
+var vid = document.getElementById("bgvid");
+var pauseButton = document.querySelector("#polina button");
 
-  // jQuery is required to run this code
-  $( document ).ready(function() {
-    scaleVideoContainer();
+if (window.matchMedia('(prefers-reduced-motion)').matches) {
+    vid.removeAttribute("autoplay");
+    vid.pause();
+    pauseButton.innerHTML = "Paused";
+}
 
-    initBannerVideoSize('.video-container .poster img');
-    initBannerVideoSize('.video-container .filter');
-    initBannerVideoSize('.video-container video');
+function vidFade() {
+  vid.classList.add("stopfade");
+}
 
-    $(window).on('resize', function() {
-      scaleVideoContainer();
-      scaleBannerVideoSize('.video-container .poster img');
-      scaleBannerVideoSize('.video-container .filter');
-      scaleBannerVideoSize('.video-container video');
-    });
-  });
+vid.addEventListener('ended', function()
+{
+// only functional if "loop" is removed
+vid.pause();
+// to capture IE10
+vidFade();
+});
 
-  function scaleVideoContainer() {
-    var height = $(window).height() + 5;
-    var unitHeight = parseInt(height) + 'px';
-    $('.homepage-hero-module').css('height',unitHeight);
+
+pauseButton.addEventListener("click", function() {
+  vid.classList.toggle("stopfade");
+  if (vid.paused) {
+    vid.play();
+    pauseButton.innerHTML = "Pause";
+  } else {
+    vid.pause();
+    pauseButton.innerHTML = "Paused";
   }
+})
 
-  function initBannerVideoSize(element){
-    $(element).each(function(){
-      $(this).data('height', $(this).height());
-      $(this).data('width', $(this).width());
-    });
 
-    scaleBannerVideoSize(element);
-  }
-
-  function scaleBannerVideoSize(element) {
-
-    var windowWidth = $(window).width(),
-    windowHeight = $(window).height() + 5,
-    videoWidth,
-    videoHeight;
-
-    // console.log(windowHeight);
-
-    $(element).each(function(){
-      var videoAspectRatio = $(this).data('height')/$(this).data('width');
-
-      $(this).width(windowWidth);
-
-      if(windowWidth < 1000){
-          videoHeight = windowHeight;
-          videoWidth = videoHeight / videoAspectRatio;
-          $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
-
-          $(this).width(videoWidth).height(videoHeight);
-      }
-
-      $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
-
-    });
-  }
 </script>
 </body>
 </html>
