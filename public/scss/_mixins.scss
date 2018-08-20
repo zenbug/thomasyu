@@ -1,0 +1,80 @@
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Mixins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+@mixin default-transition{
+	-webkit-transition: all 0.15s ease-out;
+	-moz-transition: all 0.15s ease-out;
+	-ms-transition: all 0.15s ease-out;
+	-o-transition: all 0.15s ease-out;
+	transition: all 0.15s ease-out;
+}
+@mixin default-box-shadow(){
+    box-shadow: 0px 1px 2px #888;
+}
+@mixin default-text-shadow($shadow-color){
+    text-shadow: 0 1px 2px darken($shadow-color, 10%);
+}
+@mixin btn($btn-color){
+    @include default-transition();
+    background: $btn-color;
+    border-radius: $default-radius;
+    //border-bottom: 2px solid darken($btn-color, 5%);
+    //border-top: 2px solid $btn-color;
+    color: white !important;
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    text-shadow: 0 1px 1px darken($btn-color, 5%);
+    margin: 5px 0;
+    white-space: nowrap;
+
+    &:hover{
+        @include default-transition();
+        background: darken($btn-color, 5%);
+        //border-bottom: 2px solid lighten($btn-color, 2%);
+        //border-top: 2px solid lighten($btn-color, 7%);
+    }
+}
+@mixin default-img-styles{
+    border: 0px solid $gray !important;
+    border-radius: $default-radius;
+    box-shadow: none;
+}
+// Here we define the lower and upper bounds for each media size, only used as reference (from Zurb Foundation documentation):
+$small-range: (0em, 40em); /* 0, 640px */
+$medium-range: (40.063em, 64em); /* 641px, 1024px */
+$large-range: (64.063em, 90em); /* 1025px, 1440px */
+$xlarge-range: (90.063em, 120em); /* 1441px, 1920px */
+$xxlarge-range: (120.063em); /* 1921px */
+/*
+Mixin for Media Queries ("breakpoints").
+Based on this: http://css-tricks.com/media-queries-sass-3-2-and-codekit/
+
+In this project, we're using Foundation's native breakpoints instead of this (https://foundation.zurb.com/sites/docs/media-queries.html#the-breakpoint-mixin).
+
+@mixin breakpoint($point) {
+	@if $point == xxlarge-range {
+		@media (min-width: 120em) { @content; }
+	}
+	@else if $point == xlarge-range {
+		@media (max-width: 120em) { @content; }
+	}
+	@else if $point == large-range {
+		@media (max-width: 90em) { @content; }
+	}
+	@else if $point == medium-range {
+        @media (max-width: 60em)  { @content; }
+        // * This is to match Foundation's medium range:
+        @media (max-width: 1023px)  { @content; }
+	}
+	@else if $point == small-range {
+		@media (max-width: 40em)  { @content; }
+	}
+}
+*/

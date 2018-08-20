@@ -1,119 +1,18 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Import dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 @import "../../node_modules/foundation-sites/scss/foundation.scss";
 /* If I want to override any of Foundation's variables, I do so inside my own copy of _settings.scss. This also requires linking to it in node_modules/foundation-sites/scss/foundation.scss (see line 24). */
 
 @include foundation-everything;
 
-// My custom styles start here:
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-$dark-blue: #003478;
-$light-blue: #79a5ff;
-$gray: #F1F1E6;
-$green: #007D58;
-$cream: #FFF7D6;
-
-$font-body: 'Muli', sans-serif;
-$font-heading: 'Merriweather', serif;
-$text-color: #333;
-$heading-color: $dark-blue;
-$link-on-dark-color: lighten($green, 15%);
-
-$default-radius: 4px;
-$medium-radius: 10px;
-$large-radius: 75px;
-$default-font-size: 18px;
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Mixins
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-@mixin default-transition{
-	-webkit-transition: all 0.15s ease-out;
-	-moz-transition: all 0.15s ease-out;
-	-ms-transition: all 0.15s ease-out;
-	-o-transition: all 0.15s ease-out;
-	transition: all 0.15s ease-out;
-}
-@mixin default-box-shadow(){
-    box-shadow: 0px 1px 2px #888;
-}
-@mixin default-text-shadow($shadow-color){
-    text-shadow: 0 1px 2px darken($shadow-color, 10%);
-}
-@mixin btn($btn-color){
-    @include default-transition();
-    background: $btn-color;
-    border-radius: $default-radius;
-    //border-bottom: 2px solid darken($btn-color, 5%);
-    //border-top: 2px solid $btn-color;
-    color: white !important;
-    display: inline-block;
-    font-size: 0.9rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    padding: 1rem 2rem;
-    text-transform: uppercase;
-    text-shadow: 0 1px 1px darken($btn-color, 5%);
-    margin: 5px 0;
-    white-space: nowrap;
-
-    &:hover{
-        @include default-transition();
-        background: darken($btn-color, 5%);
-        //border-bottom: 2px solid lighten($btn-color, 2%);
-        //border-top: 2px solid lighten($btn-color, 7%);
-    }
-}
-@mixin special-link-style($special-link-color){
-    color: $special-link-color;
-    border-bottom: 1px solid $special-link-color;
-    &:hover{
-        background: $special-link-color;
-        color: white;
-    }
-}
-@mixin img-effect{
-    border: 0px solid $gray !important;
-    border-radius: $default-radius;
-    box-shadow: none;
-}
-// Here we define the lower and upper bounds for each media size, only used as reference (from Zurb Foundation documentation):
-$small-range: (0em, 40em); /* 0, 640px */
-$medium-range: (40.063em, 64em); /* 641px, 1024px */
-$large-range: (64.063em, 90em); /* 1025px, 1440px */
-$xlarge-range: (90.063em, 120em); /* 1441px, 1920px */
-$xxlarge-range: (120.063em); /* 1921px */
-/*
-Mixin for Media Queries ("breakpoints").
-Based on this: http://css-tricks.com/media-queries-sass-3-2-and-codekit/
-
-In this project, we're using Foundation's native breakpoints instead of this (https://foundation.zurb.com/sites/docs/media-queries.html#the-breakpoint-mixin).
-
-@mixin breakpoint($point) {
-	@if $point == xxlarge-range {
-		@media (min-width: 120em) { @content; }
-	}
-	@else if $point == xlarge-range {
-		@media (max-width: 120em) { @content; }
-	}
-	@else if $point == large-range {
-		@media (max-width: 90em) { @content; }
-	}
-	@else if $point == medium-range {
-        @media (max-width: 60em)  { @content; }
-        // * This is to match Foundation's medium range:
-        @media (max-width: 1023px)  { @content; }
-	}
-	@else if $point == small-range {
-		@media (max-width: 40em)  { @content; }
-	}
-}
-*/
-
+// Import the SASS file that wowjs needs (animate.scss):
+@import "_animate";
+// Import all the other SASS files. update this every time I make a new SASS file. If we were using globbing, we could use an asterisk here and have it automatically add any files in this folder so we don't have to update it:
+@import "_variables";
+@import "_mixins";
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Styles
@@ -122,11 +21,43 @@ Styles
 * {
     -webkit-font-smoothing: subpixel-antialiased;
 }
-h1{
-    color: black;
-    @include breakpoint(small){ color: green; }
-    @include breakpoint(medium){ color: yellow; }
-    @include breakpoint(large){ color: red; }
-    @include breakpoint(xlarge){ color: blue; }
-    @include breakpoint(xxlarge){ color: cyan; }
+body{
+    // * Don't let the background video play on small devices:
+    @include breakpoint (800px down){ background: url(../backer.png) #000 no-repeat center center fixed; }
 }
+.wow { visibility: hidden; }
+h1{
+    color: white;
+    font-size: 5rem;
+    font-family: $font-heading;
+        font-family: 'Cinzel Decorative', cursive;
+    font-weight: 100;
+    letter-spacing: 30px;
+    text-transform: uppercase;
+    span{
+        font-size: 7rem;
+    }
+}
+
+// * Start background video styles (there's also a rule on the body tag above):
+video#bgvid {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ background: url('backer.png') no-repeat;
+  background-size: cover;
+  transition: 1s opacity;
+  @include breakpoint(800px down){ display: none; }
+}
+// * When the background video finishes playing, it pauses. This controls the opacity of the video at that point:
+.stopfade {
+   //opacity: .5;
+}
+// * End background video styles.
+
