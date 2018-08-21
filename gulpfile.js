@@ -18,7 +18,7 @@ var imageminJpegRecompress = require('imagemin-jpeg-recompress');
 // File paths
 var DIST_PATH = 'public/dist';
 var SCRIPTS_PATH = 'public/scripts/**/*.js'
-var CSS_PATH = 'public/css/**/*.css';
+var CSS_PATH = 'public/scss/**/*.scss';
 var IMAGES_PATH = 'public/images/**/*.{png,jpeg,jpg,svg,gif}';
 
 // apply PostCSS plugins
@@ -65,8 +65,12 @@ gulp.task('styles', function() {
 // Styles (SASS):
 gulp.task('styles', function() {
     console.log('starting styles task');
-    // Load all the CSS files in the order we want:
-    return gulp.src('public/scss/styles.scss')
+    // Load all the CSS files in the order we want, then the CSS_PATH variable will load all remaining files in the css folder:
+    return gulp.src([
+                        'public/scss/_variables.css',
+                        'public/scss/_mixins.css',
+                        CSS_PATH
+                    ])
         // Plumber allows errors to happen without making you restart Gulp Watch in the terminal:
         .pipe(plumber(function (err){
             // State that there's an error:
@@ -81,8 +85,8 @@ gulp.task('styles', function() {
         // Add any vendor-specific vendor prefixes to allow older browsers to support stuff like Flexbox:
         // ! I COMMENTED OUT autoprefixer BECAUSE IT WAS GIVING ME PROBLEMS COMPILING SASS CODE:
         //.pipe(autoprefixer())
-        // Then combine them (This is commented out because we're combining them in SASS with @include):
-        //.pipe(concat('styles.css'))
+        // Then combine them and pass in the name we want the combined file to have (This could be commented out and done in SASS instead with @include):
+        .pipe(concat('styles.css'))
         // Minify that resulting file (This is commented out because it's built into the SASS Gulp plugin):
         //.pipe(minifyCss())
         .pipe(sass({
@@ -98,7 +102,6 @@ gulp.task('styles', function() {
 // Scripts
 gulp.task('scripts', function () {
     console.log('Starting scripts task');
-
     return gulp.src(SCRIPTS_PATH)
         .pipe(plumber(function (err){
             // State that there's an error:

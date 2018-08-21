@@ -1,6 +1,8 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Import dependencies
+Import dependencies.
+
+Most SASS files in this project are being called from inside gulpfile.js, but I can't get foundation.scss to work that way so I'm importing it here. This is because foundation.scss imports *its own* set of files from inside node_modules/foundation-sites. That breaks when done through gulpfile.js.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 @import "../../node_modules/foundation-sites/scss/foundation.scss";
@@ -8,11 +10,6 @@ Import dependencies
 
 @include foundation-everything;
 
-// Import the SASS file that wowjs needs (animate.scss):
-@import "_animate";
-// Import all the other SASS files. update this every time I make a new SASS file. If we were using globbing, we could use an asterisk here and have it automatically add any files in this folder so we don't have to update it:
-@import "_variables";
-@import "_mixins";
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Styles
@@ -27,7 +24,7 @@ body{
 }
 .wow { visibility: hidden; }
 h1{
-    color: white;
+    color: #fff;
     font-size: 6rem;
     font-family: $font-heading;
         font-family: 'Cinzel Decorative', cursive;
