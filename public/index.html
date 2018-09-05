@@ -11,28 +11,36 @@
 
 <body>
 
-<div class="grid-container">
-  <div class="grid-x grid-margin-x grid-padding-x">
+<header class="header">
+  <div class="grid-container">
+    <div class="grid-x grid-margin-x grid-padding-x">
+      <div class="cell">
+          <h1 class="wow fadeInDown" data-wow-delay="1s"><span>T</span>homas <span>Y</span>u</h1>
+          <nav class="menu-primary">
+            <ul class="menu">
+              <li class="menu__item"><a href="#" class="menu__link">Bio</a></li>
+              <li class="menu__item"><a href="#" class="menu__link">Audio/Video</a></li>
+              <li class="menu__item"><a href="#" class="menu__link">Tour</a></li>
+              <li class="menu__item"><a href="#" class="menu__link">Press Kit</a></li>
+              <li class="menu__item"><a href="#" class="menu__link">Media</a></li>
+              <li class="menu__item"><a href="#" class="menu__link">Blog</a></li>
+              <li class="menu__item"><a href="#" class="menu__link">Professional Work</a></li>
+            </ul><!-- /.menu -->
+          </nav>
+      </div><!-- /.cell -->
+      <div class="cell">
+        <video poster="backer.png" id="bgvid" playsinline autoplay muted>
+          <!--
+          - Video needs to be muted, since Chrome 66+ will not autoplay video with sound.
+          WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
+          <source src="tom.webm" type="video/webm">
+          <source src="tom.mp4" type="video/mp4">
+        </video>
+      </div><!-- /.cell -->
 
-    <div class="cell">
-      <div class="wow slideInDown">
-        <h1><span>T</span>homas <span>Y</span>u</h1>
-      </div><!-- /.square -->
-    </div><!-- /.cell -->
-
-    <div class="cell">
-      <video poster="backer.png" id="bgvid" playsinline autoplay muted>
-        <!--
-        - Video needs to be muted, since Chrome 66+ will not autoplay video with sound.
-        WCAG general accessibility recommendation is that media such as background video play through only once. Loop turned on for the purposes of illustration; if removed, the end of the video will fade in the same way created by pressing the "Pause" button  -->
-        <source src="tom.webm" type="video/webm">
-        <source src="tom.mp4" type="video/mp4">
-      </video>
-    </div><!-- /.cell -->
-
-  </div><!-- /.grid-x -->
-</div><!-- /.grid-container -->
-
+    </div><!-- /.grid-x -->
+  </div><!-- /.grid-container -->
+</header><!-- /.header -->
   <script src="dist/scripts.js"></script>
 
   <script>

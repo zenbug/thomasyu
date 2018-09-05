@@ -29,13 +29,13 @@ h1{
     font-family: $font-heading;
         font-family: 'Cinzel Decorative', cursive;
     font-weight: 100;
-    letter-spacing: 10px;
+    letter-spacing: -3px;
     span{
         font-size: 8rem;
     }
 }
 
-// * Start background video styles (there's also a rule on the body tag above):
+// * Start background video styles (there's also a rule about this on the body tag above):
 video#bgvid {
     position: fixed;
     top: 50%;
